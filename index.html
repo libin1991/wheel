@@ -97,6 +97,12 @@
         var pointO = false;
         var ro = 0;
 
+        $(document).on('touchstart', function(e) {
+            e.preventDefault();
+        }).on('touchmove', function(e) {
+            e.preventDefault();
+        });
+
         line.addEventListener('touchstart', function(e) {
             var touche = e.touches[0];
             oX = touche.clientX;
@@ -108,7 +114,7 @@
         });
 
         line.addEventListener('touchmove', function(e) {
-            
+            e.stopPropagation();
             var mx = e.touches[0].clientX;
             var my = e.touches[0].clientY;
             
