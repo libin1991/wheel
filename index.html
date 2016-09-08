@@ -77,17 +77,32 @@
 
 
     //判断point3在point1和point2组成的直线的左边还是右边
+    // function duration(point1, point2, point3) {
+    //     var k = (point2.y - point1.y) / (point2.x - point1.x);
+    //     var b = point1.y - k * point1.x;
+    //     console.log(k);
+    //     if (k > 0 && point3.y < point3.x * k + b) {
+    //         return 1;
+    //     } else if (k < 0 && point3.y > point3.x * k + b) {
+    //         return 1;
+    //     } else if(k === 0 && point3.x > point1.x) {
+    //         return 1;
+    //     }
+    //     return -1;
+    // }
+
+    //通过面积量的方法来判断顺时针还是逆时针
+    //point1传入圆心，point2传入起始点，point3传入终点
     function duration(point1, point2, point3) {
-        var k = (point2.y - point1.y) / (point2.x - point1.x);
-        var b = point1.y - k * point1.x;
-        if (k > 0 && point3.y > point3.x * k + b) {
-            return 1;
-        } else if (k < 0 && point3.y > point3.x * k + b) {
-            return 1;
-        } else if(k === 0 && point3.x > point1.x) {
-            return 1;
+        var sp = (point1.x-point3.x)*(point2.y-point3.y)-(point1.y-point3.y)*(point2.x-point3.x);
+        console.log(sp);
+        if(sp>0) {
+            return 1
+        } else if(sp<0) {
+            return -1
+        } else {
+            return 0;
         }
-        return -1;
     }
 
     var line = document.getElementById('line');
@@ -123,7 +138,6 @@
     });
 
     line.addEventListener('touchmove', function(e) {
-        e.stopPropagation();
         var mx = e.touches[0].clientX;
         var my = e.touches[0].clientY;
 
@@ -132,7 +146,7 @@
             y: my
         });
 
-        ro = ro * duration(pointO, pointCenter, {
+        ro = ro * duration(pointCenter, pointO, {
             x: mx,
             y: my
         });
